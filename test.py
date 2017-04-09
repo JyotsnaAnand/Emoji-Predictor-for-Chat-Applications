@@ -20,9 +20,6 @@ def main():
     #print gender_data.sample(n=10)
 
 
-    #Training: 70%, Development: 20%, Testing: 10%
-    (training_data, development_data, testing_data) = preprocessing.split_data(gender_data)
-
     #printing separate line counts
     #print len(training_data.index), len(development_data.index), len(testing_data.index)
 
@@ -34,9 +31,9 @@ def main():
 
 
     #remove later
-    (ran, gender_data) = train_test_split(testing_data, test_size = 0.001)
+    #(ran, gender_data) = train_test_split(testing_data, test_size = 0.001)
 
-    clean_gender_data = gender_data.loc[(gender_data['gender'] != 'nan') | (gender_data['words'] != '\N')]
+    gender_data = gender_data.loc[(gender_data['gender'] != 'nan') | (gender_data['words'] != '\N')]
 
     #print len(clean_gender_data.index)
 
@@ -50,7 +47,7 @@ def main():
     emoji_column["emoji"] = emoji_column["emoji"].str.strip(']').str.strip('[')
 
     emoji_list = emoji_column["emoji"].tolist() 
-    gender_data["word_list"] = gender_data["words"].str.split(' ')
+    gender_data["words"] = gender_data["words"].str.split(' ')
 
     #gender_data["emojis"] = gender_data["word_list"] - emoji_list
 
@@ -61,8 +58,9 @@ def main():
     #gender_data["emojis"] = gender_data["emojis"] - gender_data["word_list"]
 
     emoji_set = set(emoji_list)
-    def check_row (val):
-        return list(set(val).intersection(emoji_set))
+    
+    #def check_row (val):
+    #    return list(set(val).intersection(emoji_set))
 
     '''
     for index in gender_data.iteritems():
@@ -70,7 +68,13 @@ def main():
         gender_data.loc[index,'emojis'] = common
     '''
 
-    gender_data = gender_data[pd.notnull(gender_data['word_list'])]
+    #gender_data = gender_data[pd.notnull(gender_data['word_list'])]
+
+    gender_data = gender_data.dropna() 
+
+    gender_data['emojis'] = gender_data['words'].apply(lambda x: ','.join(list(set(x).intersection(emoji_set))))
+
+    '''
     for i, row in gender_data.iterrows():
         #print type(row['word_list'])
         #print i, row
@@ -79,8 +83,22 @@ def main():
             gender_data.set_value(i,'emojis', ','.join(val))
         except TypeError:
             print i, row, type(row['word_list'])
+
+    '''
+
     print gender_data.sample(n=10)
-    print emoji_column.sample(n=10)
+    #print emoji_column.sample(n=10)
+    gender_data.to_csv('messages_emojis.csv')
+
+    #Training: 70%, Development: 20%, Testing: 10%
+    (training_data, development_data, testing_data) = preprocessing.split_data(gender_data)
+    training_data.to_csv('training_messages_emojis.csv')
+    development_data.to_csv('development_solution.csv')
+    testing_data.to_csv.to_csv('testing_solution.csv')
+
+    preprocessing.get_specific_columns(development_data, ['gender', 'words']).to_csv('development_set.csv')
+    preprocessing.get_specific_columns(testing_data, ['gender', 'words']).to_csv('testing_set.csv')
+
 
 
 if __name__ == "__main__":
