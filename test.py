@@ -94,7 +94,7 @@ def main():
     (training_data, development_data, testing_data) = preprocessing.split_data(gender_data)
     training_data.to_csv('training_messages_emojis.csv')
     development_data.to_csv('development_solution.csv')
-    testing_data.to_csv.to_csv('testing_solution.csv')
+    testing_data.to_csv('testing_solution.csv')
 
     preprocessing.get_specific_columns(development_data, ['gender', 'words']).to_csv('development_set.csv')
     preprocessing.get_specific_columns(testing_data, ['gender', 'words']).to_csv('testing_set.csv')
