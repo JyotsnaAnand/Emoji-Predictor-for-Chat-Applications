@@ -31,7 +31,7 @@ def main():
 
 
     #remove later
-    #(ran, gender_data) = train_test_split(testing_data, test_size = 0.001)
+    #(ran, gender_data) = train_test_split(gender_data, test_size = 0.0001)
 
     gender_data = gender_data.loc[(gender_data['gender'] != 'nan') | (gender_data['words'] != '\N')]
 
@@ -45,9 +45,10 @@ def main():
     #print emoji_column.sample(n=10)
 
     emoji_column["emoji"] = emoji_column["emoji"].str.strip(']').str.strip('[')
+    #emoji_column["emoji"] = emoji_column["emoji"]
 
     emoji_list = emoji_column["emoji"].tolist() 
-    gender_data["words"] = gender_data["words"].str.split(' ')
+    #gender_data["words"] = gender_data["words"].str.split(' ')
 
     #gender_data["emojis"] = gender_data["word_list"] - emoji_list
 
@@ -59,6 +60,10 @@ def main():
 
     emoji_set = set(emoji_list)
     
+    #print emoji_list
+
+    #return
+
     #def check_row (val):
     #    return list(set(val).intersection(emoji_set))
 
@@ -72,7 +77,7 @@ def main():
 
     gender_data = gender_data.dropna() 
 
-    gender_data['emojis'] = gender_data['words'].apply(lambda x: ','.join(list(set(x).intersection(emoji_set))))
+    gender_data['emojis'] = gender_data['words'].apply(lambda x: ','.join(list(set(x.split(' ')).intersection(emoji_set))))
 
     '''
     for i, row in gender_data.iterrows():
