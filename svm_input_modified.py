@@ -41,19 +41,6 @@ def main():
     train_emojis = training_data['emojis'].tolist()
     dev_emojis = development_data['emojis'].tolist()
 
-    #print train_emojis[0:10]
-
-
-    #print train_emojis
-
-    #gender_data['emojis'] = gender_data['words'].apply(lambda x: ','.join(list(set(x.split(' ')).intersection(emoji_set))))
-
-
-    #train_emojis = [str(i).split(',') for i in train_emojis]
-    #dev_emojis = [str(i).split(',') for i in dev_emojis]
-
-
-
     f = open("svm_input_top_emojis.txt", "w+")
     print dev_emojis[1:10]
     print dev_msgs[1:10]
