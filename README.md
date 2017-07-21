@@ -28,7 +28,8 @@ We would like to thank Leiden Weibo Corpus for making their Dataset open source.
 
 Contributors:
 
+Supriya Nallapeta 		nallapet@usc.edu
 Jyotsna Anand 			janand@usc.edu
 Santhana Gopalan Raghavan 	santhanr@usc.edu
 Saravanan Ravanan		ravanan@usc.edu
-Supriya Nallapeta 		nallapet@usc.edu
+
